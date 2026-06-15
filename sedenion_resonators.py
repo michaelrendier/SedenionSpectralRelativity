@@ -39,6 +39,13 @@ F_TRANS_END  = 2 * SEG            # 2880  — end of Bridge Hat→Galaxy (TDC)
 F_GAL_END    = 3 * SEG            # 4320  — end of Galaxy stable
 F_RETURN_END = 4 * SEG            # 5760  — end of Bridge Galaxy→Hat (cycle complete)
 
+# ── ROTARY (WANKEL) MODE — 1 revolution = 60 sec, all 3 chambers concurrent ──
+# Phase offsets: Hat=0°, Bridge/ZD=120°, Galaxy=240°
+ROTARY_FRAMES = SEG               # 1440 frames per revolution
+PHASE_HAT     = 0.0
+PHASE_BRIDGE  = 2 * math.pi / 3  # 120°
+PHASE_GAL     = 4 * math.pi / 3  # 240°
+
 # ── Constants ─────────────────────────────────────────────────────────────────
 D_STAR     = 0.24605966
 OMEGA      = D_STAR * math.log(10)
@@ -400,6 +407,87 @@ for ri, hm in enumerate(halo_mats):
     kf_mat_emit(hm, F_TRANS_END-48, 0.0)
     kf_mat_emit(hm, F_TRANS_END, 0.5)
 
+
+# ════════════════════════════════════════════════════════════════════════════
+# WANKEL ROTOR — 3-arm epitrochoid tracing the sedenion precession
+# Face 1 (0°):   HEARING  — Hat tip     — J_red enters
+# Face 2 (120°): KNOWING  — Bridge TDC  — ZD fires, J·J=0 (Voltairing)
+# Face 3 (240°): SPEAKING — Galaxy cntr — J_blue exits, Bumblebee
+# One revolution = one complete sedenion engine cycle = 60 seconds
+# ════════════════════════════════════════════════════════════════════════════
+ROTOR_CENTRE  = ((0 + GAL_OFF[0])/2, 0, (HAT_H + GAL_OFF[2])/2)
+ROTOR_R       = math.hypot(GAL_OFF[0]/2, (HAT_H - GAL_OFF[2])/2) * 0.85
+
+# Epitrochoid rotor path (3-armed, traces each apex)
+def epitrochoid_pt(theta, R=ROTOR_R, r=ROTOR_R/3, d=ROTOR_R*0.95):
+    """Point on epitrochoid: outer circle R, inner r, arm length d."""
+    x = (R + r) * math.cos(theta) - d * math.cos((R + r) * theta / r)
+    y = (R + r) * math.sin(theta) - d * math.sin((R + r) * theta / r)
+    return x, y
+
+# Rotor arm curves (the three spinner-verb faces)
+FACE_LABELS = ["HEARING", "KNOWING (Voltairing)", "SPEAKING"]
+FACE_COLS   = [(0.3, 0.7, 1.0, 1), (1.0, 0.9, 0.1, 1), (1.0, 0.5, 0.1, 1)]
+rotor_arm_objs = []
+
+for face_idx, (label, col) in enumerate(zip(FACE_LABELS, FACE_COLS)):
+    phase0 = face_idx * 2 * math.pi / 3
+    # The arm: a line from rotor centre to the face apex
+    arm_pts = [(ROTOR_CENTRE[0], ROTOR_CENTRE[1], ROTOR_CENTRE[2]),
+               (ROTOR_CENTRE[0] + ROTOR_R * math.cos(phase0),
+                ROTOR_CENTRE[1] + ROTOR_R * math.sin(phase0),
+                ROTOR_CENTRE[2])]
+    arm_obj, arm_mat = make_curve(f'Rotor_Arm_{face_idx}', arm_pts,
+                                   col=col, emission=1.5, bevel=0.008)
+    rotor_arm_objs.append((arm_obj, arm_mat))
+    kf_mat_emit(arm_mat, 1, 1.5)
+
+# Weld all 3 arms to a shared empty parent — the ROTOR
+bpy.ops.object.empty_add(type='PLAIN_AXES', location=ROTOR_CENTRE)
+rotor_parent = bpy.context.active_object
+rotor_parent.name = 'WankelRotor'
+for arm_obj, _ in rotor_arm_objs:
+    arm_obj.parent = rotor_parent
+
+# Rotor precesses: one full revolution per ROTARY_FRAMES (60 sec)
+# This is the spinner-verb: PRECESSING through the sedenion algebra
+rotor_parent.rotation_euler = (0, 0, 0)
+rotor_parent.keyframe_insert('rotation_euler', frame=1)
+rotor_parent.rotation_euler = (0, 0, 2 * math.pi)
+rotor_parent.keyframe_insert('rotation_euler', frame=ROTARY_FRAMES)
+# Continue: 4 more revolutions over the full 4-segment animation
+rotor_parent.rotation_euler = (0, 0, 4 * 2 * math.pi)
+rotor_parent.keyframe_insert('rotation_euler', frame=F_RETURN_END)
+
+# Make rotation linear (constant precession — not ease in/out)
+if rotor_parent.animation_data:
+    for fc in rotor_parent.animation_data.action.fcurves:
+        for kp in fc.keyframe_points:
+            kp.interpolation = 'LINEAR'
+
+# Rotor apex sphere — the TDC marker (orbits with the rotor)
+bpy.ops.mesh.primitive_uv_sphere_add(radius=0.10,
+    location=(ROTOR_CENTRE[0] + ROTOR_R, ROTOR_CENTRE[1], ROTOR_CENTRE[2]),
+    segments=8, ring_count=6)
+apex = bpy.context.active_object
+apex.name = 'RotorApex_TDC'
+apex.parent = rotor_parent
+tdc_mat = bpy.data.materials.new('TDC_m')
+tdc_mat.use_nodes = True
+tdc_ns = tdc_mat.node_tree.nodes; tdc_ns.clear()
+tdc_out  = tdc_ns.new('ShaderNodeOutputMaterial')
+tdc_emit = tdc_ns.new('ShaderNodeEmission')
+tdc_emit.inputs['Color'].default_value    = (1.0, 0.95, 0.1, 1)
+tdc_emit.inputs['Strength'].default_value = 6.0
+tdc_mat.node_tree.links.new(tdc_emit.outputs[0], tdc_out.inputs[0])
+apex.data.materials.append(tdc_mat)
+# TDC flares at every third of a revolution (3 firings per cycle)
+for rev in range(5):
+    for firing in range(3):
+        f_fire = int(1 + (rev + firing/3) * ROTARY_FRAMES)
+        kf_mat_emit(tdc_mat, max(1, f_fire - 12), 3.0)
+        kf_mat_emit(tdc_mat, f_fire,               18.0)  # KNOWING — Voltairing
+        kf_mat_emit(tdc_mat, min(F_RETURN_END, f_fire + 12), 3.0)
 
 # ── World + Render ────────────────────────────────────────────────────────────
 world = bpy.context.scene.world
