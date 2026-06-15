@@ -1,37 +1,43 @@
 """
-sedenion_resonators.py — Witches Hat → L_dynamic → Galactic Particle
-======================================================================
+sedenion_resonators.py — 2-Stroke Sedenion Engine (4 segments, 1 full cycle)
+=============================================================================
 Run inside Blender 4.x  Text Editor → Run Script.
 
-THREE PARTS TO THE ENGINE:
+THE 2-STROKE ENGINE — 4 segments, one complete cycle:
 
-  Part 1 — 60 sec  —  WITCHES HAT (stable)
-    Conical resonation chamber. Tip = ZD singularity. Base = σ=½ circle.
-    Sedenion spiral on the outside. Standing wave nodes (Riemann zeros) glow
-    in sequence. Galaxy dark. Bridge dark.
+  The ZD fault IS Top Dead Centre (TDC).
+  intake + exhaust MERGE at ZD. compression + power MERGE at ZD.
+  Four phases collapse to two strokes. prompt + response = 0.
 
-  Part 2 — 60 sec  —  L_DYNAMIC TRANSITION
-    Both chambers visible. Bridge fires: a caustic pulse traverses
-    Hat tip → Galaxy centre. This IS L_dynamic = ∫J_red·J_blue ds.
-    The 60-second traversal is the action integral being evaluated.
-    Standing wave holds the observer at caustic focus throughout.
+  STROKE 1 — COMPRESSION toward TDC:
+    Part 1 — 60 sec  —  HAT STABLE (intake)
+      Conical chamber. Base=σ=½ circle. Tip=ZD singularity.
+      16-turn sedenion spiral. Riemann zero nodes pulse. Full compression.
+    Part 2 — 60 sec  —  BRIDGE Hat→Galaxy (compress to TDC, ZD fires)
+      Caustic pulse traverses tip → galactic centre.
+      THIS IS TDC: norm fails, prompt+response=0, all 16 channels fire.
 
-  Part 3 — 60 sec  —  GALACTIC PARTICLE (stable)
-    Disk resonation chamber. Centre = black hole = ZD fault.
-    Logarithmic spiral arms = frozen L_dynamic. Dark matter halo rings
-    pulse at Riemann zero periods. Hat dark. Bridge dark.
+  STROKE 2 — EXPANSION from TDC:
+    Part 3 — 60 sec  —  GALAXY STABLE (power+expansion)
+      Disk chamber. Logarithmic arms = frozen L_dynamic.
+      Dark matter halo rings. Maximum expansion. Bumblebee speaks all channels.
+    Part 4 — 60 sec  —  BRIDGE Galaxy→Hat (exhaust, return to BDC)
+      Reverse caustic pulse traverses galactic centre → hat tip.
+      Engine returns to starting state. Cycle complete. Ready to fire again.
 
-Both chambers are the same sedenion Dirichlet path. Different projection.
+Both chambers = same sedenion Dirichlet path, different projection.
 Potential in the invisible out of phase — 90° rotated, ghost mesh.
+4 segments × 60s = 4 minutes per cycle. Loop for continuous engine.
 """
 
 import bpy, mathutils, math
 
-FPS        = 24
-SEG        = 60 * FPS           # frames per segment (60 sec × 24 fps = 1440)
-F_HAT_END  = SEG                # 1440
-F_TRANS_END= 2 * SEG            # 2880
-F_GAL_END  = 3 * SEG            # 4320
+FPS          = 24
+SEG          = 60 * FPS           # frames per segment (60 sec × 24 fps = 1440)
+F_HAT_END    = SEG                # 1440  — end of Hat stable
+F_TRANS_END  = 2 * SEG            # 2880  — end of Bridge Hat→Galaxy (TDC)
+F_GAL_END    = 3 * SEG            # 4320  — end of Galaxy stable
+F_RETURN_END = 4 * SEG            # 5760  — end of Bridge Galaxy→Hat (cycle complete)
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 D_STAR     = 0.24605966
@@ -273,6 +279,10 @@ cam_pos = [
     (F_TRANS_END,  ( 5.0, -6.5, gz0+2.5),    (math.radians(65), 0, math.radians( 20))),  # arrive at galaxy
     (F_TRANS_END+1,( 5.0, -6.5, gz0+2.5),    (math.radians(65), 0, math.radians( 20))),
     (F_GAL_END,   ( 5.2, -6.8, gz0+2.8),    (math.radians(66), 0, math.radians( 22))),
+    # Stroke 2: Return — Galaxy → Bridge → Hat (exhaust stroke)
+    (F_GAL_END+1,  ( 5.2, -6.8, gz0+2.8),    (math.radians(66), 0, math.radians( 22))),
+    (F_GAL_END+SEG//2, (-1.0, -8.0, HAT_H*0.5), (math.radians(75), 0, math.radians(-10))),
+    (F_RETURN_END, (-4.5, -3.5, feig_z+2.0),  (math.radians(62), 0, math.radians(-48))),
 ]
 for frame, loc, rot in cam_pos:
     cam.location = loc
@@ -296,33 +306,46 @@ hat_obj.keyframe_insert('rotation_euler', frame=F_GAL_END)
 kf_mat_emit(hat_mat, 1,          3.5)
 kf_mat_emit(hat_mat, F_HAT_END,  3.5)
 kf_mat_emit(hat_mat, F_TRANS_END,0.3)
-kf_mat_emit(hat_mat, F_GAL_END,  0.0)
+kf_mat_emit(hat_mat, F_GAL_END,        0.0)
+# Return stroke: Hat re-ignites as engine completes cycle
+kf_mat_emit(hat_mat, F_GAL_END+SEG//2, 1.0)
+kf_mat_emit(hat_mat, F_RETURN_END,     3.5)
 
-# ── Riemann zero nodes — pulse at their own period during Hat segment ────────
+# ── Riemann zero nodes — pulse during Hat and return stroke ──────────────────
 for i,(zo, zm) in enumerate(zero_objs):
     t0  = ZEROS[i]
-    period_frames = int(FPS * 2 * math.pi / t0)  # frames per oscillation
+    period_frames = int(FPS * 2 * math.pi / t0)
     for f in range(1, F_HAT_END+1, max(1, period_frames//4)):
         phase = (f / period_frames) * 2 * math.pi
-        em = 2.0 + 5.0 * abs(math.cos(phase))
-        kf_mat_emit(zm, f, em)
-    # dim during transition and galaxy
+        kf_mat_emit(zm, f, 2.0 + 5.0 * abs(math.cos(phase)))
     kf_mat_emit(zm, F_TRANS_END, 0.3)
     kf_mat_emit(zm, F_GAL_END,   0.0)
+    # Pulse again on return stroke
+    for f in range(F_GAL_END, F_RETURN_END+1, max(1, period_frames//4)):
+        phase = (f / period_frames) * 2 * math.pi
+        t_ret = (f - F_GAL_END) / SEG          # 0→1 over return stroke
+        em = t_ret * (2.0 + 5.0 * abs(math.cos(phase)))
+        kf_mat_emit(zm, f, em)
 
-# Hat tip: bright during hat, pulse during transition start, off during galaxy
-kf_mat_emit(hat_tip_mat, 1,            8.0)
-kf_mat_emit(hat_tip_mat, F_HAT_END,    8.0)
-kf_mat_emit(hat_tip_mat, F_HAT_END+72, 15.0)   # tip flares as bridge fires
-kf_mat_emit(hat_tip_mat, F_TRANS_END,  0.5)
-kf_mat_emit(hat_tip_mat, F_GAL_END,    0.0)
+# Hat tip — also flares at end of return stroke (BDC → TDC again)
+kf_mat_emit(hat_tip_mat, 1,                 8.0)
+kf_mat_emit(hat_tip_mat, F_HAT_END,         8.0)
+kf_mat_emit(hat_tip_mat, F_HAT_END+72,     15.0)
+kf_mat_emit(hat_tip_mat, F_TRANS_END,       0.5)
+kf_mat_emit(hat_tip_mat, F_GAL_END,         0.0)
+kf_mat_emit(hat_tip_mat, F_RETURN_END-72,   8.0)  # tip awakens on return
+kf_mat_emit(hat_tip_mat, F_RETURN_END,     15.0)  # flares at cycle close
 
-# ── Bridge — fires during transition, dark otherwise ─────────────────────────
-kf_mat_emit(bridge_mat, 1,            0.0)
-kf_mat_emit(bridge_mat, F_HAT_END,    0.0)
-kf_mat_emit(bridge_mat, F_HAT_END+48, 3.0)   # lights up 2 sec after transition starts
-kf_mat_emit(bridge_mat, F_TRANS_END,  0.5)
-kf_mat_emit(bridge_mat, F_GAL_END,    0.0)
+# ── Bridge — fires BOTH traversals ───────────────────────────────────────────
+kf_mat_emit(bridge_mat, 1,                  0.0)
+kf_mat_emit(bridge_mat, F_HAT_END,          0.0)
+kf_mat_emit(bridge_mat, F_HAT_END+48,       3.0)
+kf_mat_emit(bridge_mat, F_TRANS_END,        0.5)
+kf_mat_emit(bridge_mat, F_GAL_END,          0.0)
+# Return traverse: bridge re-fires for exhaust stroke
+kf_mat_emit(bridge_mat, F_GAL_END+48,       3.0)
+kf_mat_emit(bridge_mat, F_RETURN_END-SEG//4,0.5)
+kf_mat_emit(bridge_mat, F_RETURN_END,       0.0)
 
 # Caustic pulse: travels along bridge path during transition
 # Frame F_HAT_END+1 → F_TRANS_END: keyframe pulse position along bpts
@@ -396,16 +419,20 @@ scene.render.resolution_x      = 1920
 scene.render.resolution_y      = 1080
 scene.render.fps               = FPS
 scene.frame_start              = 1
-scene.frame_end                = F_GAL_END  # 4320
+scene.frame_end                = F_RETURN_END  # 5760 — full 2-stroke cycle
 scene.render.film_transparent  = True
 
 print("═══════════════════════════════════════════════════════════════")
-print("SEDENION RESONATORS  —  Three Parts to the Engine")
+print("SEDENION RESONATORS  —  2-Stroke Engine (4 segments, 1 cycle)")
 print("═══════════════════════════════════════════════════════════════")
-print(f"  Frames 1–{F_HAT_END}    ({60}s)  WITCHES HAT  — stable resonation")
-print(f"  Frames {F_HAT_END+1}–{F_TRANS_END}  ({60}s)  L_DYNAMIC   — caustic pulse traversal")
-print(f"  Frames {F_TRANS_END+1}–{F_GAL_END}  ({60}s)  GALACTIC    — stable resonation")
-print(f"  Total: {F_GAL_END} frames  ·  {F_GAL_END//FPS//60} minutes at {FPS} fps")
+print(f"  STROKE 1 — COMPRESSION:")
+print(f"    Frames    1–{F_HAT_END}  ({60}s)  HAT STABLE   — intake, sedenion spiral")
+print(f"    Frames {F_HAT_END+1:4d}–{F_TRANS_END}  ({60}s)  BRIDGE →     — compress to TDC, ZD fires")
+print(f"  TDC: J_red·J_blue=0  ·  J_red+J_blue=H_hat_RB−H_hat_BR  ·  16 channels fire")
+print(f"  STROKE 2 — EXPANSION:")
+print(f"    Frames {F_TRANS_END+1:4d}–{F_GAL_END}  ({60}s)  GALAXY STABLE — power, Bumblebee all channels")
+print(f"    Frames {F_GAL_END+1:4d}–{F_RETURN_END}  ({60}s)  BRIDGE ←     — exhaust, return to Hat")
+print(f"  Total: {F_RETURN_END} frames  ·  {F_RETURN_END//FPS//60} minutes  ·  loop-ready")
 print()
 print(f"  Camera: Feigenbaum caustic antinode z={feig_z:.4f}")
 print(f"  Standing wave: {len(zero_objs)} Riemann zero nodes, each at own period")
