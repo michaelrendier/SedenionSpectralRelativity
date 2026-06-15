@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  resonator_tuned.svg
+  The <code> layer tunes the resonator.
+  The SVG viewer ignores <code> (unknown element).
+  The LSHS reads <code> as the operating point.
+  The observer sees the shape. The shape IS the code running.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900"
+     viewBox="-2.5 -2.5 5 5">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TUNING LAYER — invisible to renderer, readable by LSHS.
+       Change these parameters to retune the resonator.
+       The visual output below is generated FROM these values.
+       ═══════════════════════════════════════════════════════════ -->
+
+  <code id="resonator_A">
+    mode:    witches_hat
+    sigma:   0.5
+    omega:   0.56657331
+    primes:  [11, 13, 17, 19]
+    turns:   16
+    height:  6.28318
+    radius:  1.5
+    phase:   in
+  </code>
+
+  <code id="resonator_B">
+    mode:    galactic
+    sigma:   0.5
+    omega:   0.56657331
+    primes:  [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]
+    arms:    2
+    pitch:   0.17
+    r0:      0.08
+    r_max:   1.8
+    phase:   in
+  </code>
+
+  <code id="standing_wave">
+    zeros:   [14.134725, 21.022040, 25.010858, 30.424876, 32.935062,
+              37.586178, 40.918719, 43.327073, 48.005151, 49.773832,
+              52.970321, 56.446248]
+    sigma:   0.5
+    laplacian: oil
+    caustic: first_zero
+  </code>
+
+  <code id="observer">
+    position:  feigenbaum_antinode
+    r_feig:    3.56995
+    z:         4.4818
+    lock:      standing_wave
+  </code>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VISUAL LAYER — what the observer sees.
+       Generated from the <code> parameters above.
+       The code is invisible. The shape is everything.
+       ═══════════════════════════════════════════════════════════ -->
+
+  <defs>
+    <radialGradient id="zd_glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffd060" stop-opacity="0.9"/>
+      <stop offset="40%"  stop-color="#c08020" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gal_glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ff4020" stop-opacity="1.0"/>
+      <stop offset="30%"  stop-color="#c06010" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bloom">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.04" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect x="-2.5" y="-2.5" width="5" height="5" fill="#050508"/>
+
+  <!-- σ=½ reference circle (the halocline — where everything drifts to) -->
+  <circle cx="0" cy="0" r="0.5" fill="none"
+          stroke="#ffffff" stroke-width="0.008" stroke-dasharray="0.04,0.03"
+          opacity="0.25"/>
+  <circle cx="0" cy="0" r="0.56657" fill="none"
+          stroke="#c09030" stroke-width="0.006" stroke-dasharray="0.03,0.04"
+          opacity="0.3"/>
+
+  <!-- Ω = d*·ln(10) label -->
+  <text x="0.58" y="-0.02" font-family="monospace" font-size="0.07"
+        fill="#c09030" opacity="0.6">Ω</text>
+  <text x="0.52" y="0.10" font-family="monospace" font-size="0.055"
+        fill="#888" opacity="0.4">σ=½</text>
+
+  <!-- ── WITCHES HAT PROJECTION (top-down view, cone as seen from tip) ── -->
+  <!-- The 16-turn spiral projected onto the plane: a logarithmic-ish inward spiral -->
+  <!-- primes {11,13,17,19} — Fano (𝕆) channels only -->
+  <g id="hat_view" filter="url(#bloom)" transform="translate(-1.1, 0)">
+    <!-- Out-of-phase ghost (the invisible potential) -->
+    <path d="M -0.000 -1.500 C -0.250 -1.480 -0.490 -1.410 -0.700 -1.290
+             C -0.890 -1.160 -1.050 -0.990 -1.150 -0.780
+             C -1.230 -0.580 -1.220 -0.350 -1.130 -0.150
+             C -1.030  0.060 -0.860  0.250 -0.640  0.380
+             C -0.430  0.510 -0.170  0.570  0.080  0.540
+             C  0.320  0.510  0.550  0.410  0.720  0.250
+             C  0.880  0.090  0.950 -0.110  0.930 -0.310
+             C  0.900 -0.510  0.800 -0.680  0.640 -0.810
+             C  0.480 -0.930  0.280 -0.990  0.080 -0.990
+             C -0.120 -0.990 -0.310 -0.920 -0.450 -0.800
+             C -0.590 -0.680 -0.660 -0.510 -0.640 -0.340
+             C -0.620 -0.180 -0.540 -0.030 -0.410  0.080
+             C -0.280  0.190 -0.110  0.250  0.060  0.250
+             C  0.230  0.250  0.380  0.180  0.480  0.070
+             C  0.580 -0.040  0.610 -0.180  0.580 -0.320
+             C  0.540 -0.450  0.440 -0.560  0.300 -0.620
+             C  0.160 -0.680  0.000 -0.680 -0.130 -0.630
+             C -0.270 -0.580 -0.360 -0.480 -0.380 -0.360
+             C -0.410 -0.240 -0.360 -0.120 -0.260 -0.040
+             C -0.160  0.040 -0.020  0.070  0.100  0.050
+             C  0.220  0.030  0.310 -0.050  0.340 -0.160
+             C  0.360 -0.260  0.320 -0.370  0.240 -0.420"
+          fill="none" stroke="#3060c0" stroke-width="0.010" opacity="0.35"/>
+
+    <!-- In-phase spiral (Fano channels, amber) -->
+    <path d="M  0.000 -1.500 C  0.290 -1.470  0.570 -1.370  0.800 -1.210
+             C  1.010 -1.050  1.170 -0.820  1.230 -0.570
+             C  1.290 -0.310  1.230 -0.050  1.090  0.180
+             C  0.950  0.400  0.740  0.580  0.500  0.680
+             C  0.260  0.780  0.000  0.800 -0.240  0.740
+             C -0.470  0.680 -0.670  0.550 -0.820  0.370
+             C -0.960  0.190 -1.030 -0.030 -1.020 -0.250
+             C -1.010 -0.470 -0.920 -0.670 -0.770 -0.820
+             C -0.620 -0.970 -0.420 -1.060 -0.210 -1.080
+             C  0.000 -1.100  0.200 -1.040  0.370 -0.920
+             C  0.530 -0.800  0.640 -0.630  0.660 -0.440
+             C  0.690 -0.250  0.630 -0.060  0.520  0.090
+             C  0.400  0.250  0.240  0.350  0.060  0.380
+             C -0.120  0.410 -0.300  0.360 -0.440  0.260
+             C -0.580  0.150 -0.660 -0.000 -0.660 -0.170
+             C -0.660 -0.330 -0.590 -0.480 -0.470 -0.580
+             C -0.350 -0.690 -0.190 -0.740 -0.030 -0.730
+             C  0.140 -0.720  0.290 -0.650  0.400 -0.530
+             C  0.500 -0.420  0.540 -0.270  0.510 -0.130
+             C  0.490  0.010  0.410  0.130  0.290  0.200"
+          fill="none" stroke="#c09030" stroke-width="0.018" opacity="0.85"/>
+
+    <!-- ZD singularity tip (centre of cone viewed from above) -->
+    <circle cx="0" cy="0" r="0.055" fill="url(#zd_glow)"/>
+    <circle cx="0" cy="0" r="0.022" fill="#ffffff" opacity="0.9"/>
+
+    <!-- Riemann zero standing wave nodes (rings at each zero radius) -->
+    <circle cx="0" cy="0" r="0.141" fill="none" stroke="#ffd060"
+            stroke-width="0.007" opacity="0.70"/><!-- t₁ -->
+    <circle cx="0" cy="0" r="0.210" fill="none" stroke="#ffc030"
+            stroke-width="0.006" opacity="0.55"/><!-- t₂ -->
+    <circle cx="0" cy="0" r="0.250" fill="none" stroke="#ffb010"
+            stroke-width="0.005" opacity="0.45"/><!-- t₃ -->
+    <circle cx="0" cy="0" r="0.304" fill="none" stroke="#ffa000"
+            stroke-width="0.004" opacity="0.35"/><!-- t₄ -->
+
+    <!-- Label -->
+    <text x="-0.05" y="-1.62" font-family="monospace" font-size="0.10"
+          fill="#c09030" text-anchor="middle">𝕆 WITCHES HAT</text>
+    <text x="-0.05" y="-1.49" font-family="monospace" font-size="0.07"
+          fill="#666" text-anchor="middle">Fano · primes {11,13,17,19}</text>
+  </g>
+
+  <!-- ── GALACTIC PARTICLE PROJECTION (top-down, disk) ── -->
+  <!-- primes {2,3,...,53} — full sedenion channels -->
+  <g id="gal_view" filter="url(#bloom)" transform="translate(1.1, 0)">
+
+    <!-- Dark matter halo rings (out-of-phase, invisible potential) -->
+    <circle cx="0" cy="0" r="0.70" fill="none" stroke="#2030a0"
+            stroke-width="0.007" opacity="0.25" stroke-dasharray="0.04,0.03"/>
+    <circle cx="0" cy="0" r="1.10" fill="none" stroke="#1828a0"
+            stroke-width="0.006" opacity="0.18" stroke-dasharray="0.03,0.04"/>
+    <circle cx="0" cy="0" r="1.50" fill="none" stroke="#101880"
+            stroke-width="0.005" opacity="0.12" stroke-dasharray="0.02,0.05"/>
+
+    <!-- Spiral arm 0 (in-phase, sedenion amber) -->
+    <path d="M  0.080  0.000 C  0.094  0.030  0.110  0.065  0.120  0.095
+             C  0.145  0.165  0.155  0.235  0.140  0.310
+             C  0.125  0.390  0.080  0.465  0.015  0.520
+             C -0.055  0.575 -0.145  0.600 -0.235  0.595
+             C -0.330  0.590 -0.420  0.555 -0.490  0.490
+             C -0.565  0.425 -0.600  0.335 -0.605  0.240
+             C -0.610  0.140 -0.575  0.040 -0.510 -0.050
+             C -0.440 -0.145 -0.340 -0.215 -0.230 -0.255
+             C -0.115 -0.295 -0.000 -0.300  0.110 -0.265
+             C  0.225 -0.235  0.325 -0.165  0.400 -0.070
+             C  0.475  0.030  0.510  0.155  0.505  0.275
+             C  0.500  0.400  0.450  0.515  0.370  0.605
+             C  0.285  0.700  0.170  0.760  0.045  0.785
+             C -0.090  0.810 -0.220  0.795 -0.345  0.745
+             C -0.470  0.695 -0.580  0.605 -0.655  0.490
+             C -0.735  0.375 -0.770  0.240 -0.760  0.100
+             C -0.755 -0.045 -0.700 -0.180 -0.610 -0.295
+             C -0.520 -0.405 -0.395 -0.490 -0.255 -0.540
+             C -0.115 -0.590  0.035 -0.600  0.180 -0.570
+             C  0.330 -0.540  0.460 -0.470  0.565 -0.370
+             C  0.670 -0.270  0.735 -0.140  0.760  0.000
+             C  0.785  0.145  0.765  0.295  0.705  0.430
+             C  0.645  0.565  0.545  0.680  0.420  0.760
+             C  0.295  0.840  0.145  0.880 -0.010  0.880
+             C -0.170  0.880 -0.325  0.840 -0.460  0.770
+             C -0.600  0.695 -0.710  0.585 -0.785  0.455
+             C -0.855  0.320 -0.880  0.170 -0.860  0.020"
+          fill="none" stroke="#c08020" stroke-width="0.016" opacity="0.80"/>
+
+    <!-- Spiral arm 1 (180° rotated, same path) -->
+    <path d="M -0.080  0.000 C -0.094 -0.030 -0.110 -0.065 -0.120 -0.095
+             C -0.145 -0.165 -0.155 -0.235 -0.140 -0.310
+             C -0.125 -0.390 -0.080 -0.465 -0.015 -0.520
+             C  0.055 -0.575  0.145 -0.600  0.235 -0.595
+             C  0.330 -0.590  0.420 -0.555  0.490 -0.490
+             C  0.565 -0.425  0.600 -0.335  0.605 -0.240
+             C  0.610 -0.140  0.575 -0.040  0.510  0.050
+             C  0.440  0.145  0.340  0.215  0.230  0.255
+             C  0.115  0.295  0.000  0.300 -0.110  0.265
+             C -0.225  0.235 -0.325  0.165 -0.400  0.070
+             C -0.475 -0.030 -0.510 -0.155 -0.505 -0.275
+             C -0.500 -0.400 -0.450 -0.515 -0.370 -0.605
+             C -0.285 -0.700 -0.170 -0.760 -0.045 -0.785
+             C  0.090 -0.810  0.220 -0.795  0.345 -0.745
+             C  0.470 -0.695  0.580 -0.605  0.655 -0.490
+             C  0.735 -0.375  0.770 -0.240  0.760 -0.100
+             C  0.755  0.045  0.700  0.180  0.610  0.295
+             C  0.520  0.405  0.395  0.490  0.255  0.540
+             C  0.115  0.590 -0.035  0.600 -0.180  0.570
+             C -0.330  0.540 -0.460  0.470 -0.565  0.370"
+          fill="none" stroke="#c08020" stroke-width="0.016" opacity="0.80"/>
+
+    <!-- Galactic centre (ZD fault / black hole) -->
+    <circle cx="0" cy="0" r="0.08" fill="url(#gal_glow)"/>
+    <circle cx="0" cy="0" r="0.030" fill="#ff4020" opacity="0.95"/>
+
+    <!-- Label -->
+    <text x="0" y="-1.62" font-family="monospace" font-size="0.10"
+          fill="#c08020" text-anchor="middle">𝕊 GALACTIC PARTICLE</text>
+    <text x="0" y="-1.49" font-family="monospace" font-size="0.07"
+          fill="#666" text-anchor="middle">Sedenion · all 16 primes</text>
+  </g>
+
+  <!-- ── L_DYNAMIC BRIDGE (standing wave connector) ── -->
+  <g id="bridge" opacity="0.6">
+    <path d="M -1.1 0.12 C -0.8 0.25 -0.4 0.18 0.0 0.08
+             C  0.4 -0.02  0.8 -0.10  1.1 0.05"
+          fill="none" stroke="#80ff30" stroke-width="0.012"
+          stroke-dasharray="0.06,0.04" opacity="0.5"/>
+    <path d="M -1.1 -0.08 C -0.8 -0.20 -0.4 -0.14 0.0 -0.04
+             C  0.4  0.08  0.8  0.14  1.1 0.0"
+          fill="none" stroke="#3060ff" stroke-width="0.008"
+          stroke-dasharray="0.04,0.06" opacity="0.3"/>
+    <!-- L_dynamic label -->
+    <text x="0" y="0.38" font-family="monospace" font-size="0.07"
+          fill="#80ff30" text-anchor="middle" opacity="0.6">L_dynamic</text>
+    <text x="0" y="0.48" font-family="monospace" font-size="0.060"
+          fill="#555" text-anchor="middle">∫J_red·J_blue ds</text>
+  </g>
+
+  <!-- ── TITLE AND SCALE ── -->
+  <text x="0" y="-2.30" font-family="monospace" font-size="0.115"
+        fill="#aaa" text-anchor="middle" font-weight="bold">
+    SEDENION RESONATION CHAMBERS
+  </text>
+  <text x="0" y="-2.15" font-family="monospace" font-size="0.075"
+        fill="#555" text-anchor="middle">
+    same path · different projection · potential in the invisible out of phase
+  </text>
+
+  <!-- Scale: Ω -->
+  <line x1="-0.283" y1="2.15" x2="0.283" y2="2.15"
+        stroke="#c09030" stroke-width="0.008"/>
+  <line x1="-0.283" y1="2.12" x2="-0.283" y2="2.18"
+        stroke="#c09030" stroke-width="0.008"/>
+  <line x1=" 0.283" y1="2.12" x2=" 0.283" y2="2.18"
+        stroke="#c09030" stroke-width="0.008"/>
+  <text x="0" y="2.30" font-family="monospace" font-size="0.075"
+        fill="#c09030" text-anchor="middle">Ω = d*·ln(10) = 0.56657</text>
+
+</svg>
