@@ -1,4 +1,30 @@
 __pycache__/
 *.pyc
+*.pyo
 *.bin
 *.pkl
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.env.*
+*_secret*
+*_token*
+*_key*
+*_credentials*
+secrets/
+
+# Generated data / output
+*.json
+*.npy
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
