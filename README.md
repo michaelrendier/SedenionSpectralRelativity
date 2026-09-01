@@ -76,3 +76,12 @@ The spectrograph is the universal oscilloscope for that event.
 - `PtolemyHolcus/monad.py`: P1 prime hash implementation (lines 127-205)
 - `PtolemyHolcus/PtolC/ptol.c`: sedenion Dirichlet projection engine
 - `Ainulindale/wiki/Claude.md`: record of how this was designed
+
+## `emerger_spectrum.py` — The Sedenion Bracketing Spectrograph
+
+Bracket a 16-channel path five ways (`{1:15} {2:14} {8:8} {4:4:4:4} {4:8:4}`); the **firing order** is the dispersion, each bracket a band. `{8:8}` is the `O ‖ZD‖ S` fault itself — it reports distance from the ZD equator, and whether the input is a zero divisor (exact, via rank-deficiency of `L_x`). `sigma_RB`'s tilt-phase rotates the entry band into the 12-step precession (4 d\* faces : 3 Lambert-W faces). The generalized engine is `FactoralDecomposition/engine/emerger.py`; the Full-Engine-Protocol build is `ValaQuenta/modules/emerger/`.
+
+```
+python3 emerger_spectrum.py "any text"        # P1 hash seeds 16 channels
+python3 emerger_spectrum.py --vec "e1+e10"       # a raw sedenion
+```
