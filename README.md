@@ -3,7 +3,8 @@ The Universal Oscilloscope...and spectrograph.
 
 **Universal Oscilloscope for the Cayley-Dickson Tower.**
 
-Every algebraic layer carries information. Always. The spectrograph shows what is present at each layer for any input — language, genome, mathematics, music, name.
+Every algebraic layer carries information. Always. Two spectrographs read it:
+`layer_spectrograph.py` shows what is present at each **CD layer** (ℝ/ℂ/ℍ/𝕆/𝕊); `emerger_spectrum.py` shows what emerges from each **bracketing** of the sedenion, in firing order.
 
 ## The Architecture
 
@@ -46,11 +47,40 @@ Five stacked panels — one per algebraic layer — show:
 
 L_dynamic = ∫J_red · J_blue ds = the action of traversal through the fault in both directions simultaneously.
 
+## The Bracketing Spectrograph
+
+`emerger_spectrum.py` — **The Emerger**, rendered as a spectrograph.
+"factoral is the generalized, Spectral is Sedenion focused" (Cody, 2026-09-01).
+This repo is the Sedenion-focused half.
+
+`e_0` (real) is the **anchor** — the tilt to the *i* axis — never bracketed;
+every imaginary group is paired against it. Bracket the 16-channel path five
+ways. The **firing order** is the dispersion; each bracket is a **band**:
+
+| bracket | reads |
+|---|---|
+| `{1:15}` | the ℝ \| imaginary split — Re, N, conj, inverse |
+| `{2:14}` | the `(e0,e8)` doubling plane — the pointer `z`, `\|z\| − Ω` |
+| `{8:8}` | **the `𝕆 ‖ZD‖ 𝕊` fault itself** — distance from the ZD equator (`zd_boundary.py`'s critical line), the sheet, `J_2`; **exact zero-divisor test** via rank-deficiency of `L_x` |
+| `{4:4:4:4}` | four ℍ blocks — four SU(2) phases, `sigma_RB` tilt/axis, `Σtilt` = net work (`= 0 ⇔ σ = ½`) |
+| `{4:8:4}` | the gain spectrum `0 / 1 / √2` — multiplicative role |
+
+`sigma_RB`'s tilt-phase rotates the entry band into the 12-step precession
+(4 d\* faces : 3 Lambert-W faces). It is a **refinement** of the CD-tower
+layer table above — `{8:8}` is the ZD FAULT row.
+
+Generalized engine: `FactoralDecomposition/engine/emerger.py`.
+Full-Engine-Protocol build: `ValaQuenta/modules/emerger/`.
+Prototype: `TuringStack/the_emerger.py`.
+
 ## Usage
 
 ```bash
-python3 layer_spectrograph.py "your text here"
-# outputs: layer_spectrograph.svg
+python3 layer_spectrograph.py "your text here"     # outputs: layer_spectrograph.svg
+
+python3 emerger_spectrum.py "your text here"       # P1 hash seeds 16 channels
+python3 emerger_spectrum.py --vec "e1+e10"         # a raw sedenion
+# outputs: emerger_spectrum.svg
 ```
 
 ## Observations
@@ -76,12 +106,6 @@ The spectrograph is the universal oscilloscope for that event.
 - `PtolemyHolcus/monad.py`: P1 prime hash implementation (lines 127-205)
 - `PtolemyHolcus/PtolC/ptol.c`: sedenion Dirichlet projection engine
 - `Ainulindale/wiki/Claude.md`: record of how this was designed
-
-## `emerger_spectrum.py` — The Sedenion Bracketing Spectrograph
-
-Bracket a 16-channel path five ways (`{1:15} {2:14} {8:8} {4:4:4:4} {4:8:4}`); the **firing order** is the dispersion, each bracket a band. `{8:8}` is the `O ‖ZD‖ S` fault itself — it reports distance from the ZD equator, and whether the input is a zero divisor (exact, via rank-deficiency of `L_x`). `sigma_RB`'s tilt-phase rotates the entry band into the 12-step precession (4 d\* faces : 3 Lambert-W faces). The generalized engine is `FactoralDecomposition/engine/emerger.py`; the Full-Engine-Protocol build is `ValaQuenta/modules/emerger/`.
-
-```
-python3 emerger_spectrum.py "any text"        # P1 hash seeds 16 channels
-python3 emerger_spectrum.py --vec "e1+e10"       # a raw sedenion
-```
+- `FactoralDecomposition/engine/emerger.py`: the generalized bracketing engine (ascent dual of `lineage.py`)
+- `ValaQuenta/modules/emerger/`: the Full-Engine-Protocol build
+- `ValaQuenta/modules/box_kite/`: the exact PSL(2,7) ZD geometry (G₂ is the blow-up)
