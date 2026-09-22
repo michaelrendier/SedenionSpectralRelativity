@@ -73,6 +73,130 @@ Generalized engine: `FactoralDecomposition/engine/emerger.py`.
 Full-Engine-Protocol build: `ValaQuenta/modules/emerger/`.
 Prototype: `TuringStack/the_emerger.py`.
 
+## The Recursive Bracketing & Firing-Order Engine
+
+`bracket_firing_engine.py` — takes `emerger_spectrum.py`'s five NAMED
+top-level brackets and follows the bifurcation all the way down instead of
+stopping at five bands: the sedenion's own 16x16 `L(a)` matrix splits into
+its **two orthogonal octonions**, each of which splits into its **two
+orthogonal quaternions**, each into two complex pairs, each into two reals.
+31 nodes total (`1+2+4+8+16`), a literal binary tree.
+
+The split is an exact matrix identity, not an approximation — verified live,
+every dimension of the tower, before anything was built on it:
+
+```
+a = (a1, a2)   =>   L_a = [ L_a1        -R_a2 o C ]
+                           [ L_a2 o C     R_a1     ]
+```
+
+(`C` = conjugation, `L_x`/`R_x` = left/right multiplication in the
+half-dimension sub-algebra.) **Bracketing**, named exactly rather than left
+implicit: this sign/ordering is one of a few equivalent-but-distinct
+Cayley-Dickson doubling conventions — the one already hard-coded into
+`emerger_spectrum.py`'s `cd_mul`. **Firing order**, named exactly: a
+one-way, depth-first cursor over the 31-node tree — at every split the
+smaller-norm child fires first, and a norm TIE is exactly `on_zd_equator`
+generalized to every level of the tower, not only the top `{8:8}` split.
+
+**The fractal signal, chased and found:** every NONZERO node below dim 16
+is provably an exact isometry (Hurwitz's theorem — ℝ, ℂ, ℍ, 𝕆 are the only
+normed division algebras that exist), meaning `L_a`'s eigenvalues all share
+one modulus at every layer except the sedenion root itself. Verified live
+across random inputs and a sparse zero-divisor input; the one apparent
+counterexample found while checking (`e1+e10`, several sub-dim-16 nodes
+showing spread) traced back exactly to an all-zero sub-vector (`0/0`,
+undefined, not a real violation) — a caught false alarm kept in the record
+rather than quietly fixed and forgotten. **The sedenion root is the only
+place in the whole tree where eigenvalue-modulus can spread at all — that
+departure from a single value IS the zero-divisor fault, read directly off
+the spectrum, not just off the rank test.**
+
+## The Hyper-Linear Algebra Decomposition Bridge
+
+`hyper_linear_bridge.py` — runs the same generic recipe (one SCALE-type
+generator per basis position, composed with a position operator, read
+spectrally) on two different algebras side by side: plain integer
+multiplication (self-contained here, mirroring
+`GenerationalLineage/engine/toolsets/hyper_linear.py` exactly — no
+cross-repo import, per this project's own module-independence rule) and
+the sedenion `L_a` tower (`bracket_firing_engine.py`, above).
+
+**The honest contrast it reports:** ℤ under `a*b` can never fault under
+this recipe — the integers have no zero divisors, structurally, not
+measured per-input. The sedenion tower faults in exactly one place (the
+root, dim 16) and is provably as clean as ℤ's own multiplication
+everywhere below that (Hurwitz). Same recipe, one algebra that never
+breaks and one that breaks in exactly one spot.
+
+## The Crankshaft, Three-Phase
+
+`crankshaft_three_phase.py` — the box-kite's own 3-fold rotation, found and
+verified rather than assumed: each box-kite's 6 Assessors split into 3
+"reversal-pair" lobes (its 3 non-edges), and cyclically permuting those
+lobes is a genuine order-3 graph automorphism that commutes with the
+box-kite's own vibrational Laplacian — a real symmetry, not a relabelling.
+That rotation is the crankshaft (Wankel framing: 3 lobes turning past one
+fixed housing). Because it commutes with the Laplacian, it acts *within*
+each vibrational eigenspace, and diagonalizing it there assigns every mode
+a phase — literally 3-phase, cube roots of unity, checked not assumed:
+
+    lambda=0  (e0's zero mode, 1-dim):  phase 0 deg only
+    lambda=4  (3-fold degenerate):      the full 3-phase set: 0, +120, -120 deg
+    lambda=6  (2-fold degenerate):      the two moving phases only, no 0 deg
+
+Identical on all 7 struts, verified live. See
+`marrais_boxkite_catalog.txt` (`VAPMIP/`) for the established object this
+is built on.
+
+## The Prime Gauge Field, in the Sedenion
+
+`prime_gauge_sedenion.py` — how the sedenion describes and is influenced
+by `ValaQuenta/modules/prime_gauge_field/`'s `Γ(s)=(s−1)/(s+1)`. Four
+checked results:
+
+1. **Containment** — every `span(e0, e_k)`, `k=1..15`, is a literal,
+   closed copy of ℂ inside the sedenion (`e_k²=-e0`, verified). `Γ`
+   embeds unchanged into any one; Hurwitz guarantees an exact isometry
+   there, so nothing sedenion-specific happens in a single copy.
+2. **The symmetric superposition** — a real negative result. Spreading
+   the same `Γ(s)` identically across all 15 imaginary directions never
+   produces a zero divisor, for any `s` tested — too symmetric to hit
+   the thin zero-divisor locus.
+3. **The Assessor embedding** — the real positive finding. Embedding
+   `Γ(s)` into an actual Assessor plane fires (becomes an exact zero
+   divisor) exactly when `Γ(s)` lands on a diagonal ray — pulled back
+   through `Γ`'s own inverse Möbius map, an **exact circle** in the
+   `s`-plane: `center=i, radius=√2`, verified to `1e-15`. The Assessor's
+   *other* sign gives a **second** circle, `center=-i`, found via
+   `equation_space_engine.py`'s gradient walk landing there and checked
+   rather than dismissed — see `firing_circle_minus()`.
+4. **Influence is the curvature, not the membership test** — `Γ`'s own
+   curvature `F(s)` (no sedenion reference in its definition) correlates
+   with `|∇ρ(s)|` (how fast the embedded sedenion approaches its own
+   zero-divisor locus) at **Pearson ≈0.97–0.98**, and the firing circle
+   is a genuine **fold/caustic** (`ρ/|dr| → ` the same nonzero constant
+   from both sides — linear, not quadratic falloff), confirmed via
+   `equation_space_engine.py`'s `classify_singularity()`. The circle
+   passes exactly through both `Γ`'s zero (`s=1`, which is also ζ's own
+   pole) and `Γ`'s pole (`s=-1`); its center (`i`) and radius (`√2=|1+i|`)
+   are exactly Fermat's two-square data for the prime 2.
+
+## Equation Space — steering by a collapse function's own gradient
+
+`equation_space_engine.py` — companion to
+`GenerationalLineage/engine/toolsets/equation_space.py`, same mechanism,
+this repo's own `ρ` (the sedenion's zero-divisor proximity from
+`prime_gauge_sedenion.py`, not the cheap `Γ`-diagonal proxy). `descend()`
+reads `ρ` and its gradient at one point (free); `build_up()` walks from a
+start point to `ρ=0` by gradient descent (expensive here — a 16×16
+eigenproblem per step) and genuinely can fail to converge.
+`classify_singularity()` distinguishes a fold (caustic) from a smooth
+minimum; `steering_correlation()` checks whether an independent, cheap
+compass predicts the costly gradient. Both circles found this way match
+the ones found independently in `prime_gauge_sedenion.py` — two unrelated
+methods, same two answers.
+
 ## Usage
 
 ```bash
@@ -81,6 +205,17 @@ python3 layer_spectrograph.py "your text here"     # outputs: layer_spectrograph
 python3 emerger_spectrum.py "your text here"       # P1 hash seeds 16 channels
 python3 emerger_spectrum.py --vec "e1+e10"         # a raw sedenion
 # outputs: emerger_spectrum.svg
+
+python3 bracket_firing_engine.py "your text here"  # full 31-node bifurcation tree
+python3 bracket_firing_engine.py --vec "e1+e10"    # a raw sedenion
+# outputs: bracket_firing_engine.svg
+
+python3 hyper_linear_bridge.py                     # integers vs sedenions, side by side
+
+python3 crankshaft_three_phase.py                  # the box-kite's own 3-phase rotation, all 7 struts
+
+python3 prime_gauge_sedenion.py                     # containment, superposition, both firing circles, influence
+python3 equation_space_engine.py                    # steering by rho's gradient -- the sedenion instance
 ```
 
 ## Observations
@@ -101,6 +236,14 @@ Designed during a session on 2026-06-14 in which:
 
 The spectrograph is the universal oscilloscope for that event.
 
+## Notebooks
+
+`notebooks/01_hyper_linear_algebra_decomposition.ipynb` — the sedenion side
+of the hyper-linear algebra decomposition (see below), executed live: the
+31-node bifurcation tree, its firing order, the Hurwitz isometry check per
+layer, and the integer/sedenion bridge script's output, all real, captured
+output, nothing pasted in unexecuted.
+
 ## Related
 
 - `PtolemyHolcus/monad.py`: P1 prime hash implementation (lines 127-205)
@@ -109,3 +252,6 @@ The spectrograph is the universal oscilloscope for that event.
 - `FactoralDecomposition/engine/emerger.py`: the generalized bracketing engine (ascent dual of `lineage.py`)
 - `ValaQuenta/modules/emerger/`: the Full-Engine-Protocol build
 - `ValaQuenta/modules/box_kite/`: the exact PSL(2,7) ZD geometry (G₂ is the blow-up)
+- `GenerationalLineage/engine/toolsets/hyper_linear.py`: the integer side of
+  `hyper_linear_bridge.py` — same recipe (SCALE generator + position
+  operator + spectral read), run on `a*b` instead of `L_a`
