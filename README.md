@@ -6,6 +6,26 @@ The Universal Oscilloscope...and spectrograph.
 Every algebraic layer carries information. Always. Two spectrographs read it:
 `layer_spectrograph.py` shows what is present at each **CD layer** (ℝ/ℂ/ℍ/𝕆/𝕊); `emerger_spectrum.py` shows what emerges from each **bracketing** of the sedenion, in firing order.
 
+## The 16D Oscilloscope — one instrument, every mode
+
+`fano_oscilloscope.py` — Cody, 2026-09-22: *"this was the reason i wanted
+the 16d oscilloscope."* Originally a single-purpose Fano-vs-Sedenion
+wobble probe; now the dispatcher for every Sedenion Spectral Relativity
+engine in this repo, `--mode` selecting the probe. Each non-`wobble` mode
+delegates straight to its own already-verified module (imported, not
+reimplemented) — this file adds selection, nothing else:
+
+```bash
+python3 fano_oscilloscope.py "your text here"                # wobble (default, needs text)
+python3 fano_oscilloscope.py --mode bifurcation               # bracket_firing_engine.py
+python3 fano_oscilloscope.py --mode crankshaft                # crankshaft_three_phase.py
+python3 fano_oscilloscope.py --mode firing-circles            # prime_gauge_sedenion.py
+python3 fano_oscilloscope.py --mode equation-space             # equation_space_engine.py
+python3 fano_oscilloscope.py --mode hyper-linear               # hyper_linear_bridge.py
+```
+
+All six verified clean, same session, exit 0 each.
+
 ## The Architecture
 
 The Cayley-Dickson tower: ℝ → ℂ → ℍ → 𝕆 ‖ZD‖ 𝕊

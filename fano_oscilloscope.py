@@ -1,22 +1,52 @@
 #!/usr/bin/env python3
 """
-fano_oscilloscope.py — The Wobble Between Fano and Sedenion
-============================================================
-A signal generator drives 16 oscillators (one per prime channel).
-Project the 16D path DOWN to the Fano plane (𝕆, channels e4-e7).
-The wobble = what the sedenion channels (e8-e15) are doing outside Fano space.
+fano_oscilloscope.py — The 16D Oscilloscope, all Sedenion Spectral
+Relativity modes on one instrument
+=====================================================================
+Cody, 2026-09-22: "this was the reason i wanted the 16d oscilloscope."
+The signal generator that drives 16 oscillators (one per prime channel)
+was always meant to be ONE instrument with multiple probes, not five
+separate scripts that happen to share a repo. This file is now the
+dispatcher: `--mode` selects which of this session's Sedenion Spectral
+Relativity engines to run, each one reusing its own already-verified
+module directly (imported, not reimplemented) rather than this file
+re-deriving any of their math a second time.
 
-At ZD crossings: the Fano projection and the sedenion path diverge.
-That divergence IS the zero-divisor fault — the cavitation — the wobble.
+MODES:
+  wobble          (default, original) Fano-vs-Sedenion Lissajous wobble,
+                  ZD crossings at local wobble maxima. This file's own.
+  bifurcation     the 31-node CD recursive bifurcation tree, Hurwitz
+                  isometry per node. Delegates to bracket_firing_engine.py.
+  crankshaft      the box-kite's own 3-fold rotation, 3-phase eigenspace
+                  decomposition, all 7 struts. Delegates to
+                  crankshaft_three_phase.py.
+  firing-circles  the Assessor embedding of Gamma(s), both firing circles
+                  (center +-i, radius sqrt(2)), the containment/
+                  superposition/influence results. Delegates to
+                  prime_gauge_sedenion.py.
+  equation-space  steering by rho's own gradient, fold/caustic
+                  classification, the Gamma-curvature compass
+                  correlation. Delegates to equation_space_engine.py.
+  hyper-linear    Z vs sedenion under the same SCALE/ADD recipe -- one
+                  algebra that can never fault, one that faults in
+                  exactly one place. Delegates to hyper_linear_bridge.py.
 
-Input: any text. The P1 prime hash seeds each oscillator's phase.
-Output: SVG showing:
+Each non-wobble mode calls its module's own already-tested entry point
+and writes/prints exactly what that module already produces when run
+standalone -- this file adds selection, not new computation.
+
+Input: any text (wobble mode only; the other modes take no text, they
+run their own fixed verification suites). The P1 prime hash seeds each
+oscillator's phase in wobble mode.
+
+wobble mode output: SVG showing:
   - Blue  path: Fano projection (𝕆 only, e4-e7, primes 11-19)
   - Red   path: full sedenion Lissajous (all 16 channels projected to 2D)
   - Gold  delta: the wobble = |sedenion - fano| at each t
   - Stars: ZD crossings (where wobble is locally maximal)
 """
 
+import argparse
 import math, sys, os, hashlib
 
 # ── Prime channels ─────────────────────────────────────────────────────────────
@@ -200,15 +230,101 @@ def build_svg(text="What is 1 plus 1", n_steps=1200):
     return '\n'.join(lines), len(zd_crossings), max_wob
 
 
-if __name__ == '__main__':
-    text = ' '.join(sys.argv[1:]) if len(sys.argv) > 1 else "What is 1 plus 1"
+# ═══════════════════════════════════════════════════════════════════════════
+#  MODE DISPATCH — the other five probes on this same instrument
+# ═══════════════════════════════════════════════════════════════════════════
+_HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, _HERE)
+
+
+def mode_wobble(text: str) -> None:
     svg, n_zd, mw = build_svg(text)
     safe = text[:30].replace(' ', '_').replace('/', '_')
     fname = f'fano_wobble_{safe}.svg'
-    path  = os.path.join(os.path.dirname(os.path.abspath(__file__)), fname)
+    path = os.path.join(_HERE, fname)
     with open(path, 'w') as f:
         f.write(svg)
     print(f'Written: {path}')
     print(f'ZD crossings (wobble peaks): {n_zd}')
     print(f'Max wobble:  {mw:.6f}')
     print(f'Is the wobble noticeable? {"YES — clearly visible" if mw > 0.1 else "subtle"}')
+
+
+def mode_bifurcation() -> None:
+    import bracket_firing_engine as m
+    m.main()
+
+
+def mode_crankshaft() -> None:
+    import crankshaft_three_phase as m
+    m.main()
+
+
+def mode_firing_circles() -> None:
+    import prime_gauge_sedenion as m
+    print("1. The 15 exact copies of C inside the sedenion:")
+    print(f"   verified: {m.verify_c_copies()}")
+    print(f"   single-copy isometry (Hurwitz), s=0.5+0.1j: {m.check_single_copy_isometry()}")
+    print("\n2. Uniform superposition across all 15 -- checked, never a zero divisor:")
+    u = m.check_uniform_superposition()
+    for r in u["results"]:
+        print(f"   s={r['s']!s:>10}  is_zero_divisor={r['is_zero_divisor']}")
+    print(f"   any zero divisor found: {u['any_zero_divisor']}")
+    print("\n3. The Assessor embedding -- both firing circles:")
+    fc1, fc2 = m.firing_circle(), m.firing_circle_minus()
+    print(f"   circle 1 (+): center={fc1['center']:.6f}  radius={fc1['radius']:.6f}")
+    print(f"   circle 2 (-): center={fc2['center']:.6f}  radius={fc2['radius']:.6f}")
+    print(f"   s=-1+2j fires the Assessor: {m.assessor_fires(-1+2j)}")
+    print("\n4. Influence (curvature vs approach-rate correlation):")
+    ic = m.influence_check()
+    print(f"   Pearson: {ic['pearson_correlation_F_vs_grad_rho']:.4f}")
+
+
+def mode_equation_space() -> None:
+    import equation_space_engine as m
+    print("descend(0.5+0.1j):", m.descend(0.5 + 0.1j))
+    b = m.build_up(0.5 + 0.1j)
+    print("\nbuild_up (walk to rho=0, expensive rho):", b)
+    print(f"distance from +i: {abs(b['s']-1j):.6f}   distance from -i: {abs(b['s']+1j):.6f}")
+    print("\nclassify_singularity:", m.classify_singularity(b["s"]))
+    print("\nsteering_correlation:", m.steering_correlation())
+    print("\nverify():", m.verify())
+
+
+def mode_hyper_linear() -> None:
+    import hyper_linear_bridge as m
+    m.main()
+
+
+MODES = {
+    "wobble": "Fano-vs-Sedenion Lissajous wobble, ZD crossings (this file's own, needs text)",
+    "bifurcation": "the 31-node CD recursive bifurcation tree, Hurwitz isometry per node",
+    "crankshaft": "the box-kite's own 3-fold rotation, 3-phase eigenspace decomposition",
+    "firing-circles": "the Assessor embedding of Gamma(s), both firing circles, influence",
+    "equation-space": "steering by rho's own gradient, fold/caustic classification",
+    "hyper-linear": "Z vs sedenion under the same SCALE/ADD recipe",
+}
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description="The 16D Oscilloscope — one instrument, all Sedenion "
+                    "Spectral Relativity modes.")
+    parser.add_argument("--mode", choices=list(MODES), default="wobble",
+                        help="which probe to run (default: wobble)")
+    parser.add_argument("text", nargs="*", help="input text (wobble mode only)")
+    args = parser.parse_args()
+
+    if args.mode == "wobble":
+        text = ' '.join(args.text) if args.text else "What is 1 plus 1"
+        mode_wobble(text)
+    elif args.mode == "bifurcation":
+        mode_bifurcation()
+    elif args.mode == "crankshaft":
+        mode_crankshaft()
+    elif args.mode == "firing-circles":
+        mode_firing_circles()
+    elif args.mode == "equation-space":
+        mode_equation_space()
+    elif args.mode == "hyper-linear":
+        mode_hyper_linear()

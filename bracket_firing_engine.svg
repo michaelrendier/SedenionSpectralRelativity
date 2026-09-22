@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" font-family="monospace">
 <rect width="1200" height="760" fill="#06060a"/>
-<text x="600.0" y="20" fill="#ddd" font-size="14" text-anchor="middle">'primes are words'</text>
+<text x="600.0" y="20" fill="#ddd" font-size="14" text-anchor="middle">'--mode bifurcation'</text>
 <text x="600.0" y="34" fill="#666" font-size="9" text-anchor="middle">the sedenion (16x16) matrix, its two orthogonal octonions, each's two orthogonal quaternions, each's two complex pairs, each's two reals</text>
 <line x1="600.0" y1="155.0" x2="320.0" y2="285.0" stroke="#333" stroke-width="0.8"/>
 <line x1="320.0" y1="285.0" x2="180.0" y2="415.0" stroke="#333" stroke-width="0.8"/>
@@ -32,65 +32,65 @@
 <line x1="1020.0" y1="415.0" x2="1090.0" y2="545.0" stroke="#333" stroke-width="0.8"/>
 <line x1="1090.0" y1="545.0" x2="1055.0" y2="675.0" stroke="#333" stroke-width="0.8"/>
 <line x1="1090.0" y1="545.0" x2="1125.0" y2="675.0" stroke="#333" stroke-width="0.8"/>
-<circle cx="600.0" cy="155.0" r="7.5" fill="#ff5070" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<circle cx="320.0" cy="285.0" r="7.3" fill="#c08020" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<circle cx="180.0" cy="415.0" r="7.0" fill="#40c080" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="180.0" y="431.0" fill="#777" font-size="7" text-anchor="middle">#24</text>
-<circle cx="110.0" cy="545.0" r="6.9" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="110.0" y="560.9" fill="#777" font-size="7" text-anchor="middle">#28</text>
-<circle cx="75.0" cy="675.0" r="6.1" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="75.0" y="690.1" fill="#777" font-size="7" text-anchor="middle">#29</text>
-<circle cx="145.0" cy="675.0" r="6.3" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="145.0" y="690.3" fill="#777" font-size="7" text-anchor="middle">#30</text>
-<circle cx="250.0" cy="545.0" r="4.5" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="250.0" y="558.5" fill="#777" font-size="7" text-anchor="middle">#25</text>
-<circle cx="215.0" cy="675.0" r="4.4" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="215.0" y="688.4" fill="#777" font-size="7" text-anchor="middle">#27</text>
-<circle cx="285.0" cy="675.0" r="3.3" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="285.0" y="687.3" fill="#777" font-size="7" text-anchor="middle">#26</text>
-<circle cx="460.0" cy="415.0" r="5.9" fill="#40c080" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="460.0" y="429.9" fill="#777" font-size="7" text-anchor="middle">#17</text>
-<circle cx="390.0" cy="545.0" r="5.1" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="390.0" y="559.1" fill="#777" font-size="7" text-anchor="middle">#18</text>
-<circle cx="355.0" cy="675.0" r="4.4" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="355.0" y="688.4" fill="#777" font-size="7" text-anchor="middle">#19</text>
-<circle cx="425.0" cy="675.0" r="4.7" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="425.0" y="688.7" fill="#777" font-size="7" text-anchor="middle">#20</text>
+<circle cx="600.0" cy="155.0" r="7.3" fill="#ff5070" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<circle cx="320.0" cy="285.0" r="6.8" fill="#c08020" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<circle cx="180.0" cy="415.0" r="6.4" fill="#40c080" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="180.0" y="430.4" fill="#777" font-size="7" text-anchor="middle">#24</text>
+<circle cx="110.0" cy="545.0" r="4.7" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="110.0" y="558.7" fill="#777" font-size="7" text-anchor="middle">#25</text>
+<circle cx="75.0" cy="675.0" r="3.0" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="75.0" y="687.0" fill="#777" font-size="7" text-anchor="middle">#26</text>
+<circle cx="145.0" cy="675.0" r="4.7" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="145.0" y="688.7" fill="#777" font-size="7" text-anchor="middle">#27</text>
+<circle cx="250.0" cy="545.0" r="6.3" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="250.0" y="560.3" fill="#777" font-size="7" text-anchor="middle">#28</text>
+<circle cx="215.0" cy="675.0" r="4.7" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="215.0" y="688.7" fill="#777" font-size="7" text-anchor="middle">#29</text>
+<circle cx="285.0" cy="675.0" r="6.1" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="285.0" y="690.1" fill="#777" font-size="7" text-anchor="middle">#30</text>
+<circle cx="460.0" cy="415.0" r="5.6" fill="#40c080" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="460.0" y="429.6" fill="#777" font-size="7" text-anchor="middle">#17</text>
+<circle cx="390.0" cy="545.0" r="4.4" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="390.0" y="558.4" fill="#777" font-size="7" text-anchor="middle">#18</text>
+<circle cx="355.0" cy="675.0" r="3.6" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="355.0" y="687.6" fill="#777" font-size="7" text-anchor="middle">#19</text>
+<circle cx="425.0" cy="675.0" r="4.3" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="425.0" y="688.3" fill="#777" font-size="7" text-anchor="middle">#20</text>
 <circle cx="530.0" cy="545.0" r="5.4" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
 <text x="530.0" y="559.4" fill="#777" font-size="7" text-anchor="middle">#21</text>
-<circle cx="495.0" cy="675.0" r="5.4" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="495.0" y="689.4" fill="#777" font-size="7" text-anchor="middle">#23</text>
-<circle cx="565.0" cy="675.0" r="3.7" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="565.0" y="687.7" fill="#777" font-size="7" text-anchor="middle">#22</text>
-<circle cx="880.0" cy="285.0" r="5.4" fill="#c08020" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<circle cx="740.0" cy="415.0" r="3.9" fill="#40c080" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="740.0" y="427.9" fill="#777" font-size="7" text-anchor="middle">#2</text>
-<circle cx="670.0" cy="545.0" r="3.9" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="670.0" y="557.9" fill="#777" font-size="7" text-anchor="middle">#6</text>
-<circle cx="635.0" cy="675.0" r="3.8" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="635.0" y="687.8" fill="#777" font-size="7" text-anchor="middle">#8</text>
-<circle cx="705.0" cy="675.0" r="3.4" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="705.0" y="687.4" fill="#777" font-size="7" text-anchor="middle">#7</text>
-<circle cx="810.0" cy="545.0" r="3.3" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="810.0" y="557.3" fill="#777" font-size="7" text-anchor="middle">#3</text>
-<circle cx="775.0" cy="675.0" r="3.1" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="775.0" y="687.1" fill="#777" font-size="7" text-anchor="middle">#4</text>
-<circle cx="845.0" cy="675.0" r="3.2" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="845.0" y="687.2" fill="#777" font-size="7" text-anchor="middle">#5</text>
-<circle cx="1020.0" cy="415.0" r="5.3" fill="#40c080" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="1020.0" y="429.3" fill="#777" font-size="7" text-anchor="middle">#9</text>
-<circle cx="950.0" cy="545.0" r="4.1" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="950.0" y="558.1" fill="#777" font-size="7" text-anchor="middle">#10</text>
-<circle cx="915.0" cy="675.0" r="4.1" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="915.0" y="688.1" fill="#777" font-size="7" text-anchor="middle">#12</text>
-<circle cx="985.0" cy="675.0" r="3.3" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="985.0" y="687.3" fill="#777" font-size="7" text-anchor="middle">#11</text>
-<circle cx="1090.0" cy="545.0" r="5.1" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="1090.0" y="559.1" fill="#777" font-size="7" text-anchor="middle">#13</text>
-<circle cx="1055.0" cy="675.0" r="3.5" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="1055.0" y="687.5" fill="#777" font-size="7" text-anchor="middle">#14</text>
-<circle cx="1125.0" cy="675.0" r="5.1" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
-<text x="1125.0" y="689.1" fill="#777" font-size="7" text-anchor="middle">#15</text>
+<circle cx="495.0" cy="675.0" r="4.3" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="495.0" y="688.3" fill="#777" font-size="7" text-anchor="middle">#22</text>
+<circle cx="565.0" cy="675.0" r="5.2" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="565.0" y="689.2" fill="#777" font-size="7" text-anchor="middle">#23</text>
+<circle cx="880.0" cy="285.0" r="6.6" fill="#c08020" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<circle cx="740.0" cy="415.0" r="6.1" fill="#40c080" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="740.0" y="430.1" fill="#777" font-size="7" text-anchor="middle">#9</text>
+<circle cx="670.0" cy="545.0" r="5.0" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="670.0" y="559.0" fill="#777" font-size="7" text-anchor="middle">#10</text>
+<circle cx="635.0" cy="675.0" r="3.5" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="635.0" y="687.5" fill="#777" font-size="7" text-anchor="middle">#11</text>
+<circle cx="705.0" cy="675.0" r="5.0" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="705.0" y="689.0" fill="#777" font-size="7" text-anchor="middle">#12</text>
+<circle cx="810.0" cy="545.0" r="5.7" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="810.0" y="559.7" fill="#777" font-size="7" text-anchor="middle">#13</text>
+<circle cx="775.0" cy="675.0" r="5.2" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="775.0" y="689.2" fill="#777" font-size="7" text-anchor="middle">#15</text>
+<circle cx="845.0" cy="675.0" r="5.0" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="845.0" y="689.0" fill="#777" font-size="7" text-anchor="middle">#14</text>
+<circle cx="1020.0" cy="415.0" r="5.8" fill="#40c080" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="1020.0" y="429.8" fill="#777" font-size="7" text-anchor="middle">#2</text>
+<circle cx="950.0" cy="545.0" r="5.5" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="950.0" y="559.5" fill="#777" font-size="7" text-anchor="middle">#6</text>
+<circle cx="915.0" cy="675.0" r="5.0" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="915.0" y="689.0" fill="#777" font-size="7" text-anchor="middle">#8</text>
+<circle cx="985.0" cy="675.0" r="4.8" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="985.0" y="688.8" fill="#777" font-size="7" text-anchor="middle">#7</text>
+<circle cx="1090.0" cy="545.0" r="4.8" fill="#60a0ff" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="1090.0" y="558.8" fill="#777" font-size="7" text-anchor="middle">#3</text>
+<circle cx="1055.0" cy="675.0" r="4.7" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="1055.0" y="688.7" fill="#777" font-size="7" text-anchor="middle">#5</text>
+<circle cx="1125.0" cy="675.0" r="3.5" fill="#c0c0c0" fill-opacity="0.90" stroke="#000" stroke-width="0.5"/>
+<text x="1125.0" y="687.5" fill="#777" font-size="7" text-anchor="middle">#4</text>
 <text x="32" y="159.0" fill="#ff5070" font-size="11" text-anchor="end" font-weight="bold">S16</text>
 <text x="32" y="289.0" fill="#c08020" font-size="11" text-anchor="end" font-weight="bold">O8</text>
 <text x="32" y="419.0" fill="#40c080" font-size="11" text-anchor="end" font-weight="bold">H4</text>
