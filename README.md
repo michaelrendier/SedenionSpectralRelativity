@@ -202,6 +202,31 @@ checked results:
    pole) and `Γ`'s pole (`s=-1`); its center (`i`) and radius (`√2=|1+i|`)
    are exactly Fermat's two-square data for the prime 2.
 
+## Spin and Wobble, Embedded in the 16 Prime Channels
+
+`sedenion_spin_wobble.py` — the sedenion form of `ValaQuenta/modules/
+spectral_primes/` and `GenerationalLineage/engine/toolsets/spectral_primes.py`
+(2026-09-26). Same 16-prime-channel embedding this repo already uses
+everywhere (`emerger_spectrum.py`'s `cd_mul`/`e`, `bracket_firing_engine.py`'s
+`left_mat`/`is_zero_divisor_dim`), asked of the theta(t)-rotation
+construction's own spin (major loop, `theta'(t)`, non-resonant) and wobble
+(minor loop, classically resonant at the primes — Riemann/von Mangoldt/Weil).
+
+**Split verdict, both computed:**
+1. **Confirmed** — wobble genuinely differentiates primes from their
+   non-prime neighbours once embedded one-value-per-channel: mean absolute
+   local jump-rate of the truncated `psi(x)` reconstruction is **5.04 at
+   the 16 primes** vs **1.53 at non-prime probes** (`p+0.5`, never prime).
+   Spin carries none of this — it never targets a prime, only uses `p` as
+   a height, and its own channel values vary smoothly.
+2. **Not confirmed** — the secondary hypothesis that this shows up as a
+   zero-divisor-locus contrast. Both the spin-vector and the wobble-vector
+   embed as non-zero-divisors with the same eigenvalue-magnitude count (3,
+   neither an isometry). Embedding a value per channel this way does not,
+   by itself, push the prime-resonant vector any closer to the ZD fault
+   than the prime-blind one — reported as a real negative result, not
+   folded into the first finding.
+
 ## Equation Space — steering by a collapse function's own gradient
 
 `equation_space_engine.py` — companion to
@@ -236,6 +261,7 @@ python3 crankshaft_three_phase.py                  # the box-kite's own 3-phase 
 
 python3 prime_gauge_sedenion.py                     # containment, superposition, both firing circles, influence
 python3 equation_space_engine.py                    # steering by rho's gradient -- the sedenion instance
+python3 sedenion_spin_wobble.py                     # spin vs wobble, embedded per prime channel
 ```
 
 ## Observations
@@ -275,3 +301,10 @@ output, nothing pasted in unexecuted.
 - `GenerationalLineage/engine/toolsets/hyper_linear.py`: the integer side of
   `hyper_linear_bridge.py` — same recipe (SCALE generator + position
   operator + spectral read), run on `a*b` instead of `L_a`
+- `ValaQuenta/modules/spectral_primes/`: the Full-Engine-Protocol build of
+  spin/wobble (the `mpmath`-backed version, including the tilt-vs-wobble
+  correlation and the Real-Tilt/Axis crossing tests this repo's
+  stdlib+numpy-only version does not reproduce)
+- `GenerationalLineage/engine/toolsets/spectral_primes.py`: the
+  decomposition/emerger reading of the same split (spin=free/descend,
+  wobble=work/build_up, cost=n_zeros)
