@@ -41,6 +41,13 @@ being precise about, since it means "which side fires first" becomes
 genuinely undefined (a real ambiguity, not a bug) exactly where a node
 sits on its own zero-divisor equator.
 
+PLAN LAYER (firing_plan.py): the smaller-norm-first rule below is ONE policy for
+assigning an order to each bracket.  A bracket may carry any firing order, written
+beside it — (R I | 2 1) fires the second child (the imaginary octonion) first and
+the first (the real octonion) second — and a bracket runs as one operation inside
+its parent in its own order.  `plan_of_tree` expresses this tree's firing order in
+that notation; nothing in this file's tree, norms or spectra changed.
+
 stdlib + numpy (eigenvalues only — the matrices themselves stay exact,
 Fraction, all the way through; only the eigen-decomposition step leaves
 exact arithmetic, same as any standard numerical linear algebra use).
@@ -182,6 +189,13 @@ def firing_order(node):
         seq += firing_order(first)
         seq += firing_order(second)
     return seq
+
+
+def plan_of_tree(a):
+    """The tree's firing order written as a plan (firing_plan.py): every bracket carries the
+    order the smaller-norm-first rule gives it.  Returns the plan; notation(plan) prints it."""
+    from firing_plan import component_plan, policy_smaller_norm
+    return component_plan(a, policy_smaller_norm)
 
 
 # ── spectral texture across levels ──────────────────────────────────────────
@@ -358,6 +372,11 @@ def main():
     print(f"\n  firing order ({len(order)} nodes, depth-first, smaller-norm-first):")
     line = "  ".join(f'{n["path"]}({n["layer"]}{n["dim"]})' for n in order)
     print(f"    {line}")
+
+    from firing_plan import notation, fire_sequence
+    plan = plan_of_tree(vec)
+    print(f"\n  the same order as a plan (leaf = e_k, order after the bar):\n    {notation(plan)}")
+    print("    leaves fire: " + " ".join(fire_sequence(plan)))
 
     print("\n  spectral texture by layer:")
     summ = spectral_summary(tree)

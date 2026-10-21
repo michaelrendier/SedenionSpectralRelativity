@@ -132,6 +132,10 @@ place in the whole tree where eigenvalue-modulus can spread at all — that
 departure from a single value IS the zero-divisor fault, read directly off
 the spectrum, not just off the rank test.**
 
+### Firing plans — brackets that carry firing orders (2026-10-21)
+
+The smaller-norm-first rule above is one policy for assigning an order. `firing_plan.py` makes the order part of the bracket: `(R I | 2 1)` fires the second child (the imaginary octonion) first and the real octonion second; a bracket runs as one operation in its own order inside its parent, so `((A B | 2 1) C | 2 1)` fires `C B A`. Operator reading: composition is associative, so only the firing order changes the result. Element reading: the sedenion product is not, so the bracketing changes it too. `bracket_firing_engine.plan_of_tree(a)` writes this file's smaller-norm rule as a plan. `python3 firing_plan.py` runs 15 exact checks; notebook `notebooks/02_bracketing_firing_plans.ipynb`; page `wiki/Bracketing-and-Firing-Plans.md`.
+
 ## The Hyper-Linear Algebra Decomposition Bridge
 
 `hyper_linear_bridge.py` — runs the same generic recipe (one SCALE-type
@@ -308,3 +312,8 @@ output, nothing pasted in unexecuted.
 - `GenerationalLineage/engine/toolsets/spectral_primes.py`: the
   decomposition/emerger reading of the same split (spin=free/descend,
   wobble=work/build_up, cost=n_zeros)
+
+## Wiki
+
+- `wiki/Bracketing-and-Firing-Plans.md` — brackets that carry firing orders: notation, the two readings, counts, the orders a bracket tree can reach (separable permutations), the ring-circle triples reproduced as plans.
+- `wiki/Ring-Circle-Operators.md` — the sedenion read slot by slot as circle-modifying operators (per-slot table, bracketings and firing orders, equations each slot makes available). Results and verdict: `VAPMIP/docs/wiki/Ring-Circle-Operators.md`; code `VAPMIP/RingCircle/`.
