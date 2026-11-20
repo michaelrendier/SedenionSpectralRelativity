@@ -1,0 +1,11 @@
+distinct ASS-words (length 1..400): 3461
+index k = XOR of generator indices (parity of counts) over words: {0: 601, 1: 583, 2: 452, 3: 473, 4: 355, 5: 344, 6: 331, 7: 322}
+sign over words (+1/-1): {1: 1730, -1: 1731}
+occupied (sign,index) addresses: observed 16 of 16 ; after shuffling each word's letters 16 of 16
+address distribution (sign,index): observed {(-1, 0): 306, (1, 0): 295, (1, 1): 292, (-1, 1): 291, (1, 3): 246, (1, 2): 228, (-1, 3): 227, (-1, 2): 224, (1, 4): 180, (-1, 4): 175, (-1, 5): 175, (-1, 6): 171, (1, 5): 169, (-1, 7): 162, (1, 6): 160, (1, 7): 160}
+                                   shuffled  {(1, 0): 314, (-1, 1): 295, (1, 1): 288, (-1, 0): 287, (-1, 3): 243, (1, 3): 230, (1, 2): 229, (-1, 2): 223, (-1, 4): 186, (-1, 7): 180, (1, 5): 174, (-1, 5): 170, (1, 4): 169, (1, 6): 168, (-1, 6): 163, (1, 7): 142}
+words whose address changes when the order of their letters is shuffled: 1749 of 3461 (50.5%) ; the index never changes (parity of counts): True
+  F = m a  (D D, then m)                       word AAS  -> address (-1, 2)
+  entropy  S = k ln W (count, then log)        word AS   -> address (1, 3)
+  inertia (scale of the second derivative)     word SAA  -> address (-1, 2)
+  boost on the light cone (scale)              word S    -> address (1, 2)

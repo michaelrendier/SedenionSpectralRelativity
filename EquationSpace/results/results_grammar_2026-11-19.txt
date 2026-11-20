@@ -1,0 +1,8 @@
+G1 PASS | [theta,D] f + D f = 0 ; theta f - i(x p)f = 0
+G2 PASS | P D P f + D f = 0 ; [P,theta] f = 0
+G3 PASS | D f = lam f -> Eq(f(x), C1*exp(lam*x)) ; theta f = s f -> Eq(f(x), C1*x**s) ; P f = +-f -> even / odd
+G4 PASS | exp(hD) f = f(x+h) residual 0 ; exp(t theta) f = f(e^t x) residual 0 (orders 12, 8)
+G5 PASS | d/dy F(xy)|_{y=1} = x F'(x) = F'(1) ; solution k*log(xp) ; additivity residual 0 (S = k ln W is the form forced by multiplicative counts)
+G6 PASS | rank 3, nullity 1, basis [1, -1, -1, 2] -> F t^2/(m x) = k ; with a = D^2 x: F = k m a
+G7 PASS | SCALE weights (4,6): ode residual 0, first-integral residual 0 ; SIGN: even ; Laurent {'a2': g2/20, 'a4': g3/28, 'a6': g2**2/1200}
+all pass: True

@@ -1,0 +1,8 @@
+distinct words: 3461, total letters 229826
+W1 distinct walks 3461 of 3461 words; index-only walks distinct 3461
+W2 reachable indices: [0, 1, 2, 3, 4, 5, 6, 7] (8 of 16)
+W3 prefix tree nodes 181292, letters 229826, ratio 0.789
+W4 first-letter split: {'A': '15.1%', 'G': '43.3%', 'S': '41.6%'}
+nodes by depth (1..12): [3, 9, 27, 81, 223, 503, 848, 1206, 1447, 1608, 1683, 1673]
+most shared prefixes (len>=3): [('GGA', 442), ('SAS', 381), ('GGG', 361), ('GGS', 361), ('SAA', 239), ('SAG', 237), ('GGAG', 221), ('GGGG', 220), ('SASA', 214), ('SSA', 197)]
+endpoints (sign,index) occupied: 16 of 16

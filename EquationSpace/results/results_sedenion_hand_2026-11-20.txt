@@ -1,0 +1,9 @@
+1. units reached from e1,e2,e4 by products: [1, 2, 3, 4, 5, 6, 7] (7 imaginary units = Fano points); Fano lines (a,b,a^b) with a<b<a^b among 1..7: [(1, 2, 3), (1, 4, 5), (1, 6, 7), (2, 4, 6), (2, 5, 7), (3, 4, 7), (3, 5, 6)]
+   e1*e2=(1, 3), e2*e4=(1, 6), e4*e1=(-1, 5); (e1 e2) e4 = (1, 7) (a unit with sign): return to e0 with sign
+2. imaginary basis triples that associate in dim 4: 27/27
+2. imaginary basis triples that associate in dim 8: 175/343
+2. imaginary basis triples that associate in dim 16: 1527/3375
+3. D16 roots: 480; ordered root pairs with product 0: 1344; distinct supports (assessors) among them: 42; all low-high?: True; with i in 1..7: True
+   E8 roots 240; E8+E8 roots 480; ordered pairs with product 0 inside E8+E8: 0
+   D16+ glue vectors (+-1/2)^16 times a random D16 root: zero in 0/40000 sampled pairs
+CORRECTIONS (written after the run, not a rerun): (a) the label "return to e0 with sign" on line 2 of this file is wrong. (e1 e2) e4 = e7, not e0. e1, e2, e4 are NOT a Fano line (1^2 = 3); the line through e1, e2 is (1, 2, 3), so a quaternion-style "i, j, k" return is e1 e2 = e3, e2 e3 = e1, e3 e1 = e2. e1, e2, e4 are the XOR generators from which all seven units come. (b) exploratory, unregistered: the counts are read once, with no prediction on file. (c) the E8 roots are placed in the octonion half in the Cayley-Dickson basis; a rotated embedding of E8 could change the E8+E8 result.

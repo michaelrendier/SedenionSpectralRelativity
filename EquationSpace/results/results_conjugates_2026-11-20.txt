@@ -1,0 +1,13 @@
+X1 (x,p) gaussian: dx*dp = 0.499999
+X2 (u=ln x, theta) lognormal k=0: du*dtheta = 0.500000
+X2 (u=ln x, theta) lognormal k=3: du*dtheta = 0.500000
+X3 (theta,p): states 200, violations of dtheta*dp >= |<p>|/2: 0, min ratio lhs/bound = 1.0552, 5th pct 1.213
+X3 best ratio over gaussian chirped family: 1.0034
+X4 <{P,p}> = 0.00e+00 (anticommute), <p> for even state = 0.00e+00
+X5 || theta P f - P theta f || = 6.07e-13
+X6 words with A and S (len<=60): 2393 ; order-sensitive under reversal: 2274 (95.0%)
+   AS vs SA : different
+   AG vs GA : different
+   SG vs GS : equal
+X7 catalog ids naming a transform/conjugate pair: 7
+    ['em.ufm::Duality', 'em.ufm::Dualist', 'kpk.ufm::kpkcircletiletransform', 'mde.ufm::md-fourier-ea', 'mmf.ufm::MMFg-Transform', 'reb5.ufm::REB_3DFractalRayTraceProgressiveDual', 'tvc.ufm::Dualies']
