@@ -26,6 +26,11 @@ QUANT = {
  "inductance": ("L_", "H", V(1, 2, -2, -2), "electromagnetism", ("div", "magnetic flux", "current")), "permittivity": ("ε0", "F/m", V(-1, -3, 4, 2), "constant", None), "permeability": ("μ0", "H/m", V(1, 1, -2, -2), "constant", None),
  "heat": ("Q", "J", V(1, 2, -2), "thermodynamics", None), "entropy": ("S", "J/K", V(1, 2, -2, 0, -1), "thermodynamics", ("div", "heat", "temperature")), "Boltzmann constant": ("k_B", "J/K", V(1, 2, -2, 0, -1), "constant", None),
  "molar gas constant": ("R_g", "J/(mol K)", V(1, 2, -2, 0, -1, -1), "constant", None), "specific heat": ("c", "J/(kg K)", V(0, 2, -2, 0, -1), "thermodynamics", None), "number of microstates": ("W", "1", V(), "thermodynamics", None),
+ "angle": ("θ", "rad", V(), "dimensionless", None), "solid angle": ("Ω", "sr", V(), "dimensionless", None), "activity": ("A_b", "Bq", V(0, 0, -1), "cursed", None), "absorbed dose": ("D_g", "Gy", V(0, 2, -2), "cursed", None),
+ "equivalent dose": ("H_s", "Sv", V(0, 2, -2), "cursed", None), "torque": ("τ", "N m", V(1, 2, -2), "mechanics", ("mul", "length", "force")), "angular frequency": ("ω", "rad/s", V(0, 0, -1), "mechanics", None),
+ "concentration": ("c_m", "mol/m³", V(0, -3, 0, 0, 0, 1), "chemistry", ("div", "amount", "volume")), "standard concentration": ("c°", "1 mol/L", V(0, -3, 0, 0, 0, 1), "constant", None), "pH": ("pH", "1", V(), "dimensionless", None),
+ "PMD coefficient": ("PMD", "ps/√km", V(0, Fr(-1, 2), 1), "cursed", None), "scattering measure": ("SM", "pc m^(-20/3)", V(0, Fr(-17, 3)), "cursed", None), "Hubble constant": ("H0", "km/s/Mpc", V(0, 0, -1), "cursed", ("div", "velocity", "length")),
+ "gas permeability": ("P_g", "barrer", V(-1, 0, 1, 0, 0, 1), "cursed", None),
 }
 def dims(e, env=QUANT):
     """-> (dims tuple, ok) ; ok False if a sum adds unlike quantities."""
@@ -47,7 +52,10 @@ def word(e):
     if op == "div": return word(e[1]) + word(e[2]) + "SG"
     if op == "ddt": return word(e[1]) + "A"
     if op == "add": return word(e[1]) + word(e[2]) + "A"
-    if op == "pow": n = int(e[2]); return word(e[1]) + "S" * (abs(n) - 1) + ("G" if n < 0 else "")
+    if op == "pow":
+        n = e[2]
+        if isinstance(n, Fr) and n.denominator != 1: return word(e[1]) + "S" + ("G" if n < 0 else "")        # a root is one SCALE
+        n = int(n); return word(e[1]) + "S" * (abs(n) - 1) + ("G" if n < 0 else "")
     if op == "log": return word(e[1]) + "S"
     raise ValueError(op)
 def names(e, out=None):
@@ -83,6 +91,10 @@ EQ = [
  ("Lorentz-B", "F = q v B", "force", ("mul", ("mul", "charge", "velocity"), "magnetic flux density"), "electromagnetism", ""), ("Coulomb", "F = q q / (ε0 x²)", "force", ("div", ("mul", "charge", "charge"), ("mul", "permittivity", ("pow", "length", 2))), "electromagnetism", "up to the dimensionless 1/4π"),
  ("flux", "Φ = V t", "magnetic flux", ("mul", "voltage", "time"), "electromagnetism", ""), ("ind", "L_ = Φ / I", "inductance", ("div", "magnetic flux", "current"), "electromagnetism", ""),
  ("E=kT", "E = k_B T", "energy", ("mul", "Boltzmann constant", "temperature"), "thermodynamics", "energy per mode"), ("Q=mcT", "Q = m c T", "heat", ("mul", ("mul", "mass", "specific heat"), "temperature"), "thermodynamics", ""),
+ ("PMD", "Δt = PMD √x", "time", ("mul", "PMD coefficient", ("pow", "length", Fr(1, 2))), "cursed", "polarisation mode dispersion: a random walk makes the delay grow as √length, so the unit carries a square root (Cursed Units 1)"),
+ ("pH", "pH = −log10(c / c°)", "pH", ("log", ("div", "concentration", "standard concentration")), "chemistry", "the logarithm acts on a dimensionless ratio; the divisor c° = 1 mol/L is the hidden reference scale (Cursed Units 2)"),
+ ("Hubble", "H0 = v / x", "Hubble constant", ("div", "velocity", "length"), "cursed", "km/s/Mpc is 2.3×10⁻¹⁸ per second; its inverse is about 14 Gyr against the true age 13.7 Gyr, an unexplained near-coincidence (the constant is not constant in time)"),
+ ("torque", "τ = x F", "torque", ("mul", "length", "force"), "mechanics", "same dimensions as energy: dimension alone cannot tell a torque from a joule"),
  ("gas", "p Vol = n R_g T", ("mul", "pressure", "volume"), ("mul", ("mul", "amount", "molar gas constant"), "temperature"), "thermodynamics", "ideal gas law (a relation: any one variable can be solved for)"),
  # deliberate unstable permutations: terms that do not cancel
  ("x:F=mv", "F = m v", "force", ("mul", "mass", "velocity"), "unstable", "UNSTABLE: mass × velocity is momentum"), ("x:E=Ft", "E = F t", "energy", ("mul", "force", "time"), "unstable", "UNSTABLE: force × time is impulse"),
@@ -90,12 +102,16 @@ EQ = [
  ("x:F=ma+v", "F = m a + v", "force", ("add", ("mul", "mass", "acceleration"), "velocity"), "unstable", "UNSTABLE: adds a force to a velocity (terms that cannot cancel)"), ("x:S=Qt", "S = Q t", "entropy", ("mul", "heat", "time"), "unstable", "UNSTABLE: heat × time is not entropy; entropy needs Q / T"),
  ("x:a=Fm", "a = F m", "acceleration", ("mul", "force", "mass"), "unstable", "UNSTABLE: force × mass has no standard name"),
 ]
+KIND = {"frequency": "periodic process (Hz)", "activity": "random decay events (Bq): averaged over many events", "angular frequency": "radians per second (the radian is a convention)", "Hubble constant": "expansion rate per unit distance",
+        "energy": "scalar energy (J)", "torque": "axial vector, force × lever arm (N m)", "heat": "scalar, energy transferred (J)", "absorbed dose": "energy absorbed per mass (Gy)", "equivalent dose": "weighted for biological damage (Sv)",
+        "action": "action (J s)", "angular momentum": "axial vector (kg m²/s)", "impulse": "force × time (N s)", "momentum": "mass × velocity", "entropy": "heat / temperature (J/K)", "Boltzmann constant": "constant (J/K)",
+        "electric field": "force per charge (V/m)", "power": "energy per time (W)", "voltage": "energy per charge (V)", "magnetic flux": "volt-seconds (Wb)", "pH": "−log10 of c / c° (a reference scale hides in the argument)"}
 def build():
     qs = []
     for n, (sym, unit, d, dom, defn) in QUANT.items():
         if defn is not None:
             dd, ok = dims(defn); assert ok and dd == d, ("definition does not match", n, dd, d)
-        qs.append(dict(name=n, symbol=sym, unit=unit, dims=[str(x) for x in d], domain=dom, defined_by=names(defn) if defn else [], definition=repr(defn) if defn else ""))
+        qs.append(dict(name=n, symbol=sym, unit=unit, dims=[str(x) for x in d], kind=KIND.get(n, ""), rational=any(x.denominator != 1 for x in d), domain=dom, defined_by=names(defn) if defn else [], definition=repr(defn) if defn else ""))
     eqs = []
     for id_, disp, lhs, rhs, dom, note in EQ:
         l, okl = dims(lhs) if isinstance(lhs, tuple) else (QUANT[lhs][2], True); r, okr = dims(rhs)

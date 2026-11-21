@@ -6,7 +6,7 @@
    - the Niemeier / Monster coverage of the 16 sedenion slots (FourthAgePapers/MonsterSiblings/engine/nightmare_engine.py, run live),
    - the routes from H_hat_RB (EquationSpace tests 5-9: G1-G7 emergent derivations).
 Run:  ../../.venv/bin/python build_gallery.py        (stdlib only)    Then serve with ./serve_gallery.sh (Firefox shows the favicon only over http)."""
-import sys, os, csv, json, collections, datetime
+import sys, os, csv, json, collections, datetime, math
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(HERE, ".."))
 import equation_space as Q, stable_equations as SE
 ROOT = os.path.expanduser("~/Projects/ThePlace"); FP = f"{ROOT}/FourthAgePapers"
@@ -35,7 +35,26 @@ gl = [m for m in groups.values() if len(m) > 1]; gid = {}
 for n, m in enumerate(gl):
     for i in m: gid[i] = n
 for i, r in enumerate(rows): r["g"] = gid.get(i, -1)
-fields = ["cat", "id", "w", "lw", "wl", "iw", "bw", "ei", "el", "eb", "cn", "sh", "g", "cls", "kind", "rel", "sane", "tier", "ev"]
+from fractions import Fraction as Fr
+IDX = {"A": 0, "S": 1, "G": 2, "$": 3}; K_ORD = 3
+cnt = collections.defaultdict(lambda: [0, 0, 0, 0])
+for w in sorted({r["lw"] for r in rows}):
+    ctx = ""
+    for ch in w + "$": cnt[ctx[-K_ORD:]][IDX[ch]] += 1; ctx += ch
+def arith(w):
+    """interval [lo, lo+width) of w$ under the catalog's own order-3 Krichevsky-Trofimov model; returns (bits, code length, first 48 code bits, code value)"""
+    lo, width, ctx = Fr(0), Fr(1), ""
+    for ch in w + "$":
+        c = cnt[ctx[-K_ORD:]]; tot = sum(c) * 2 + 4; i = IDX[ch]
+        lo += width * Fr(sum(2 * x + 1 for x in c[:i]), tot); width *= Fr(2 * c[i] + 1, tot); ctx += ch
+    bits = math.log2(width.denominator) - math.log2(width.numerator); k = math.ceil(bits)
+    while True:
+        m = -((-lo.numerator * (1 << k)) // lo.denominator)
+        if Fr(m, 1 << k) < lo + width and m < (1 << k): break
+        k += 1
+    return round(bits, 2), k, format(m, "0%db" % k)[:48], float(Fr(m, 1 << k))
+for r in rows: r["bits"], r["cl"], r["ad"], r["fr"] = arith(r["lw"]); r["uni"] = 2 * (len(r["lw"]) + 1)
+fields = ["cat", "id", "w", "lw", "wl", "iw", "bw", "ei", "el", "eb", "cn", "sh", "g", "cls", "kind", "rel", "sane", "tier", "ev", "bits", "cl", "ad", "fr", "uni"]
 catalog = [[r[f] for f in fields] for r in rows]
 qs, eqs = SE.build()
 ni = NE.niemeier_root_systems(); fp = NE.niemeier_prime_footprint(); mg = NE.monster_gap_fill(); cov = NE.full_coverage_check()
@@ -49,7 +68,8 @@ G = [("G1", "θ = xD satisfies [θ, D] = −D and θ = i x p", "The SCALE genera
      ("G5", "entropy: f(xy) = f(x) + f(y), differentiable, forces x f′ = const, so f = k ln x", "S = k ln W is the form forced by multiplicative counts: SCALE ≅ ADD in the log chart.", "entropy tree, units"),
      ("G6", "inertia: over (kg, m, s) the variables F, m, x, t have rank 3, nullity 1, group F t²/(m x)", "F = k m x/t², with a = D²x: F = k m a. The form of Newton's second law is forced by SCALE-covariance up to the dimensionless k.", "the F = ma tree"),
      ("G7", "℘ is closed under ADD, SCALE and SIGN: its ODE and first integral map to themselves (weights 4, 6), it is even, and periodic under an ADD lattice", "The Blue term's function is the function fixed by all three generators.", "physics")]
-data = dict(built=datetime.date.today().isoformat(), fields=fields, catalog=catalog, groups=gl, sign=sign, quantities=qs, equations=eqs, threshold=threshold, routes=[dict(id=a, statement=b, meaning=c, serves=d) for a, b, c, d in G],
+race = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'results', 'dirichlet_race_theory.json')))
+data = dict(race=race, built=datetime.date.today().isoformat(), fields=fields, catalog=catalog, groups=gl, sign=sign, quantities=qs, equations=eqs, threshold=threshold, routes=[dict(id=a, statement=b, meaning=c, serves=d) for a, b, c, d in G],
             counts=dict(A=sum(1 for r in rows if r["cat"] == "A"), B=sum(1 for r in rows if r["cat"] == "B")))
 tpl = open(f"{HERE}/template.html", encoding="utf-8").read(); uri = open(f"{HERE}/favicon_datauri.txt").read().strip()
 html = tpl.replace("/*DATA*/", json.dumps(data, ensure_ascii=False, separators=(",", ":"))).replace("%%FAVICON%%", uri)
