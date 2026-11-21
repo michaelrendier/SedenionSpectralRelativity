@@ -1,0 +1,7 @@
+distinct A/S/G words: 5300
+words whose left and right bracketing disagree (curved): 490 (9.2%)
+distinct addresses by L alone: 16 (of 16 signed slots possible 16)
+distinct addresses by (L, R): 16 (up to 256)
+largest class by L: 469 words; by (L,R): 469 words
+curved words where R differs only by sign: 490 of 490
+curved fraction by word length: 1:0%  2:0%  3:22%  4:0%  5:17%  6:0%  7:18%  8:0%  9:16%  10:0%  11:20%  12+:9%
