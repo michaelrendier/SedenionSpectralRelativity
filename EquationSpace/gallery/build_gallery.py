@@ -73,5 +73,6 @@ data = dict(race=race, built=datetime.date.today().isoformat(), fields=fields, c
             counts=dict(A=sum(1 for r in rows if r["cat"] == "A"), B=sum(1 for r in rows if r["cat"] == "B")))
 tpl = open(f"{HERE}/template.html", encoding="utf-8").read(); uri = open(f"{HERE}/favicon_datauri.txt").read().strip()
 html = tpl.replace("/*DATA*/", json.dumps(data, ensure_ascii=False, separators=(",", ":"))).replace("%%FAVICON%%", uri)
+import contact; html = contact.inject(html)
 open(f"{HERE}/equation_space_gallery.html", "w", encoding="utf-8").write(html)
 print("catalog", len(catalog), "| shared-word groups", len(gl), "| quantities", len(qs), "| equations", len(eqs), "| html", len(html) // 1024, "KB")
