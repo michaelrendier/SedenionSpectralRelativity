@@ -1,0 +1,17 @@
+== catalog A_python65: 65 entries
+   entries with a loop/ASG walk: 63; empty (no A/S/G letter, so NO sedenion location): 2
+   END POINT of the loop word, by index (0..15): e0:20, e1:11, e2:12, e3:7, e4:6, e5:3, e6:2, e7:2, e8:0, e9:0, e10:0, e11:0, e12:0, e13:0, e14:0, e15:0
+   distinct end points used: 15 of 32 (+-e0..e15); of the 16 reachable by A,S,G (8 indices x 2 signs): 15
+   in the Niemeier blind spots {e1, e11, e15}: e1 holds 11 entries; e11 and e15 are indices >= 8 and hold 0 (A, S, G cannot reach them without a fourth generator K = e8)
+   odd (prime-sector) indices e1,e3,e5,e7: 23 entries; even: 40
+   entries whose COMPLETE word set is shared with at least one other entry: 13 (20.0%); entries with a location of their own: 52
+
+== catalog B_fractal6268: 6268 entries
+   entries with a loop/ASG walk: 6077; empty (no A/S/G letter, so NO sedenion location): 191
+   END POINT of the loop word, by index (0..15): e0:1092, e1:989, e2:834, e3:1026, e4:630, e5:511, e6:487, e7:508, e8:0, e9:0, e10:0, e11:0, e12:0, e13:0, e14:0, e15:0
+   distinct end points used: 16 of 32 (+-e0..e15); of the 16 reachable by A,S,G (8 indices x 2 signs): 16
+   in the Niemeier blind spots {e1, e11, e15}: e1 holds 989 entries; e11 and e15 are indices >= 8 and hold 0 (A, S, G cannot reach them without a fourth generator K = e8)
+   odd (prime-sector) indices e1,e3,e5,e7: 3034 entries; even: 3043
+   entries whose COMPLETE word set is shared with at least one other entry: 1305 (20.8%); entries with a location of their own: 4963
+   the three END POINTS (init, loop, bailout) together: 1270 distinct triples for 6268 entries (largest bucket 176)
+   circle number of the loop element: 1:733, 2:550, 4:4985
